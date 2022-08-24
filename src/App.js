@@ -74,6 +74,16 @@ class App extends React.Component {
     })));
   };
 
+  removeCard = (index) => { // Referência: https://www.youtube.com/watch?v=y8ckoDFXdVE
+    const { data } = this.state;
+    data.slice();
+    data.splice(index, 1);
+    this.setState({ data });
+    this.setState((prevState) => ({
+      hasTrunfo: prevState.data.some((card) => card.cardTrunfo === true),
+    }));
+  };
+
   render() {
     const {
       cardName,
@@ -133,6 +143,13 @@ class App extends React.Component {
               {
                 card.cardTrunfo && <p data-testid="trunfo-card">Super Trunfo</p>
               }
+              <button
+                type="button"
+                data-testid="delete-button"
+                onClick={ () => this.removeCard(index) }
+              >
+                Excluir
+              </button>
             </div>
           ))}
         </div>
