@@ -1,18 +1,16 @@
 form {
   display: flex;
   flex-direction: column;
-  flex-flow: column;
   flex-wrap: wrap;
   justify-content: center;
-  width: 20%;
   padding: 20px;
+  width: 20%;
   padding-bottom: 10px;
 }
 
 p {
   display: flex;
   flex-direction: column;
-  flex-flow: column;
   flex-wrap: wrap;
 }
 
