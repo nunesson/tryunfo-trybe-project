@@ -3,6 +3,7 @@ import './App.css';
 import { v4 } from 'uuid';
 import Card from './components/Card';
 import Form from './components/Form';
+import Filter from './components/Filter';
 
 class App extends React.Component {
   state = {
@@ -15,8 +16,10 @@ class App extends React.Component {
     cardRare: 'normal',
     cardTrunfo: false,
     hasTrunfo: false,
+    disableFilter: false,
     isSaveButtonDisabled: true,
     data: [],
+    buscaNome: '',
   };
 
   // Number(cardAttr1) === attrMax
@@ -85,6 +88,11 @@ class App extends React.Component {
     }));
   };
 
+  handleSearch = ({ target: { name, type, checked, value } }) => {
+    const result = type === 'checkbox' ? checked : value;
+    this.setState({ [name]: result });
+  };
+
   render() {
     const {
       cardName,
@@ -98,6 +106,8 @@ class App extends React.Component {
       hasTrunfo,
       isSaveButtonDisabled,
       data,
+      buscaNome,
+      disableFilter,
     } = this.state;
     return (
       <div className="container">
@@ -131,37 +141,50 @@ class App extends React.Component {
             hasTrunfo={ hasTrunfo }
           />
         </span>
+
         <div>
-          {data.map((card, index) => (
-            <div key={ index }>
-              <h3 data-testid="name-card">{ card.cardName }</h3>
-              <img
-                src={ card.cardImage }
-                alt={ card.cardName }
-                data-testid="image-card"
-              />
-              <p
-                className="card-description"
-                data-testid="description-card"
-              >
-                { card.cardDescription }
-              </p>
-              <p data-testid="attr1-card">{ card.cardAttr1 }</p>
-              <p data-testid="attr2-card">{ card.cardAttr2 }</p>
-              <p data-testid="attr3-card">{ card.cardAttr3 }</p>
-              <p data-testid="rare-card">{ card.cardRare }</p>
-              {
-                card.cardTrunfo && <p data-testid="trunfo-card">Super Trunfo</p>
-              }
-              <button
-                type="button"
-                data-testid="delete-button"
-                onClick={ () => this.removeCard(index) }
-              >
-                Excluir
-              </button>
-            </div>
-          ))}
+          <Filter
+            handleSearch={ this.handleSearch }
+            buscaNome={ buscaNome }
+            disableFilter={ disableFilter }
+          />
+        </div>
+
+        <div>
+          {disableFilter
+            ? data.filter((card) => card.cardTrunfo)
+            : data
+              .filter((card) => card.cardName.includes(buscaNome))
+              .map((card, index) => (
+                <div key={ index }>
+                  <h3 data-testid="name-card">{ card.cardName }</h3>
+                  <img
+                    src={ card.cardImage }
+                    alt={ card.cardName }
+                    data-testid="image-card"
+                  />
+                  <p
+                    className="card-description"
+                    data-testid="description-card"
+                  >
+                    { card.cardDescription }
+                  </p>
+                  <p data-testid="attr1-card">{ card.cardAttr1 }</p>
+                  <p data-testid="attr2-card">{ card.cardAttr2 }</p>
+                  <p data-testid="attr3-card">{ card.cardAttr3 }</p>
+                  <p data-testid="rare-card">{ card.cardRare }</p>
+                  {
+                    card.cardTrunfo && <p data-testid="trunfo-card">Super Trunfo</p>
+                  }
+                  <button
+                    type="button"
+                    data-testid="delete-button"
+                    onClick={ () => this.removeCard(index) }
+                  >
+                    Excluir
+                  </button>
+                </div>
+              ))}
         </div>
       </div>
     );
