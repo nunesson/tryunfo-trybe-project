@@ -24,6 +24,7 @@ export default class Form extends Component {
           <label htmlFor="name">
             Nome da carta:
             <input
+              className="card-name"
               id="name"
               type="text"
               name="cardName"

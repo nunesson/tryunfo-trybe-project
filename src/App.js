@@ -1,4 +1,5 @@
 import React from 'react';
+import './App.css';
 import { v4 } from 'uuid';
 import Card from './components/Card';
 import Form from './components/Form';
@@ -99,43 +100,52 @@ class App extends React.Component {
       data,
     } = this.state;
     return (
-      <div>
-        <Form
-          onInputChange={ this.onInputChange }
-          cardName={ cardName }
-          cardDescription={ cardDescription }
-          cardAttr1={ cardAttr1 }
-          cardAttr2={ cardAttr2 }
-          cardAttr3={ cardAttr3 }
-          cardImage={ cardImage }
-          cardTrunfo={ cardTrunfo }
-          cardRare={ cardRare }
-          hasTrunfo={ hasTrunfo }
-          isSaveButtonDisabled={ isSaveButtonDisabled }
-          onSaveButtonClick={ this.onSaveButtonClick }
-        />
-        <Card
-          onInputChange={ this.onInputChange }
-          cardName={ cardName }
-          cardDescription={ cardDescription }
-          cardAttr1={ cardAttr1 }
-          cardAttr2={ cardAttr2 }
-          cardAttr3={ cardAttr3 }
-          cardImage={ cardImage }
-          cardTrunfo={ cardTrunfo }
-          cardRare={ cardRare }
-          hasTrunfo={ hasTrunfo }
-        />
+      <div className="container">
+        <div className="form-input">
+          <Form
+            onInputChange={ this.onInputChange }
+            cardName={ cardName }
+            cardDescription={ cardDescription }
+            cardAttr1={ cardAttr1 }
+            cardAttr2={ cardAttr2 }
+            cardAttr3={ cardAttr3 }
+            cardImage={ cardImage }
+            cardTrunfo={ cardTrunfo }
+            cardRare={ cardRare }
+            hasTrunfo={ hasTrunfo }
+            isSaveButtonDisabled={ isSaveButtonDisabled }
+            onSaveButtonClick={ this.onSaveButtonClick }
+          />
+        </div>
+        <span className="card-preview">
+          <Card
+            onInputChange={ this.onInputChange }
+            cardName={ cardName }
+            cardDescription={ cardDescription }
+            cardAttr1={ cardAttr1 }
+            cardAttr2={ cardAttr2 }
+            cardAttr3={ cardAttr3 }
+            cardImage={ cardImage }
+            cardTrunfo={ cardTrunfo }
+            cardRare={ cardRare }
+            hasTrunfo={ hasTrunfo }
+          />
+        </span>
         <div>
           {data.map((card, index) => (
             <div key={ index }>
-              <p data-testid="name-card">{ card.cardName }</p>
+              <h3 data-testid="name-card">{ card.cardName }</h3>
               <img
                 src={ card.cardImage }
                 alt={ card.cardName }
                 data-testid="image-card"
               />
-              <p data-testid="description-card">{ card.cardDescription }</p>
+              <p
+                className="card-description"
+                data-testid="description-card"
+              >
+                { card.cardDescription }
+              </p>
               <p data-testid="attr1-card">{ card.cardAttr1 }</p>
               <p data-testid="attr2-card">{ card.cardAttr2 }</p>
               <p data-testid="attr3-card">{ card.cardAttr3 }</p>
