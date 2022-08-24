@@ -14,6 +14,7 @@ class App extends React.Component {
     cardTrunfo: false,
     hasTrunfo: false,
     isSaveButtonDisabled: true,
+    data: [],
   };
 
   // Number(cardAttr1) === attrMax
@@ -55,6 +56,23 @@ class App extends React.Component {
     });
   };
 
+  onSaveButtonClick = (objectInfo) => {
+    this.setState((prevState) => ({
+      data: [...prevState.data, objectInfo],
+    }), () => this.setState((prevState) => ({
+      cardName: '',
+      cardDescription: '',
+      cardAttr1: 0,
+      cardAttr2: 0,
+      cardAttr3: 0,
+      cardImage: '',
+      cardRare: 'normal',
+      cardTrunfo: false,
+      isSaveButtonDisabled: true,
+      hasTrunfo: prevState.data.some((card) => card.cardTrunfo === true),
+    })));
+  };
+
   render() {
     const {
       cardName,
@@ -82,6 +100,7 @@ class App extends React.Component {
           cardRare={ cardRare }
           hasTrunfo={ hasTrunfo }
           isSaveButtonDisabled={ isSaveButtonDisabled }
+          onSaveButtonClick={ this.onSaveButtonClick }
         />
         <Card
           onInputChange={ this.onInputChange }
