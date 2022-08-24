@@ -1,4 +1,5 @@
 import React from 'react';
+import { v4 } from 'uuid';
 import Card from './components/Card';
 import Form from './components/Form';
 
@@ -56,10 +57,10 @@ class App extends React.Component {
     });
   };
 
-  onSaveButtonClick = (objectInfo) => {
+  onSaveButtonClick = () => { // trecho de código referenciado no esquenta com a Hellen
     this.setState((prevState) => ({
-      data: [...prevState.data, objectInfo],
-    }), () => this.setState((prevState) => ({
+      data: [...prevState.data, { ...prevState, id: v4() }], // cria id genérico para o array
+    }), () => this.setState((prevState) => ({ // após salvar no array data, limpa os campos
       cardName: '',
       cardDescription: '',
       cardAttr1: 0,
@@ -85,6 +86,7 @@ class App extends React.Component {
       cardTrunfo,
       hasTrunfo,
       isSaveButtonDisabled,
+      data,
     } = this.state;
     return (
       <div>
@@ -114,6 +116,26 @@ class App extends React.Component {
           cardRare={ cardRare }
           hasTrunfo={ hasTrunfo }
         />
+        <div>
+          {data.map((card, index) => (
+            <div key={ index }>
+              <p data-testid="name-card">{ card.cardName }</p>
+              <img
+                src={ card.cardImage }
+                alt={ card.cardName }
+                data-testid="image-card"
+              />
+              <p data-testid="description-card">{ card.cardDescription }</p>
+              <p data-testid="attr1-card">{ card.cardAttr1 }</p>
+              <p data-testid="attr2-card">{ card.cardAttr2 }</p>
+              <p data-testid="attr3-card">{ card.cardAttr3 }</p>
+              <p data-testid="rare-card">{ card.cardRare }</p>
+              {
+                card.cardTrunfo && <p data-testid="trunfo-card">Super Trunfo</p>
+              }
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
