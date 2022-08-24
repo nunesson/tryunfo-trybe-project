@@ -1,7 +1,6 @@
 form {
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
   justify-content: center;
   padding: 20px;
   padding-bottom: 10px;
@@ -11,7 +10,6 @@ form {
 p {
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
 }
 
 .card-name {
