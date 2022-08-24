@@ -20,6 +20,7 @@ class App extends React.Component {
     isSaveButtonDisabled: true,
     data: [],
     buscaNome: '',
+    buscaRara: '',
   };
 
   // Number(cardAttr1) === attrMax
@@ -107,6 +108,7 @@ class App extends React.Component {
       isSaveButtonDisabled,
       data,
       buscaNome,
+      buscaRara,
       disableFilter,
     } = this.state;
     return (
@@ -146,45 +148,45 @@ class App extends React.Component {
           <Filter
             handleSearch={ this.handleSearch }
             buscaNome={ buscaNome }
+            buscaRara={ buscaRara }
             disableFilter={ disableFilter }
           />
         </div>
 
         <div>
-          {disableFilter
-            ? data.filter((card) => card.cardTrunfo)
-            : data
-              .filter((card) => card.cardName.includes(buscaNome))
-              .map((card, index) => (
-                <div key={ index }>
-                  <h3 data-testid="name-card">{ card.cardName }</h3>
-                  <img
-                    src={ card.cardImage }
-                    alt={ card.cardName }
-                    data-testid="image-card"
-                  />
-                  <p
-                    className="card-description"
-                    data-testid="description-card"
-                  >
-                    { card.cardDescription }
-                  </p>
-                  <p data-testid="attr1-card">{ card.cardAttr1 }</p>
-                  <p data-testid="attr2-card">{ card.cardAttr2 }</p>
-                  <p data-testid="attr3-card">{ card.cardAttr3 }</p>
-                  <p data-testid="rare-card">{ card.cardRare }</p>
-                  {
-                    card.cardTrunfo && <p data-testid="trunfo-card">Super Trunfo</p>
-                  }
-                  <button
-                    type="button"
-                    data-testid="delete-button"
-                    onClick={ () => this.removeCard(index) }
-                  >
-                    Excluir
-                  </button>
-                </div>
-              ))}
+          {(disableFilter ? data.filter((card) => card.cardTrunfo) : data
+            .filter((card) => card.cardName.includes(buscaNome))
+            .filter((card) => (buscaRara ? card.cardRare === buscaRara : card)))
+            .map((card, index) => (
+              <div key={ index }>
+                <h3 data-testid="name-card">{ card.cardName }</h3>
+                <img
+                  src={ card.cardImage }
+                  alt={ card.cardName }
+                  data-testid="image-card"
+                />
+                <p
+                  className="card-description"
+                  data-testid="description-card"
+                >
+                  { card.cardDescription }
+                </p>
+                <p data-testid="attr1-card">{ card.cardAttr1 }</p>
+                <p data-testid="attr2-card">{ card.cardAttr2 }</p>
+                <p data-testid="attr3-card">{ card.cardAttr3 }</p>
+                <p data-testid="rare-card">{ card.cardRare }</p>
+                {
+                  card.cardTrunfo && <p data-testid="trunfo-card">Super Trunfo</p>
+                }
+                <button
+                  type="button"
+                  data-testid="delete-button"
+                  onClick={ () => this.removeCard(index) }
+                >
+                  Excluir
+                </button>
+              </div>
+            ))}
         </div>
       </div>
     );
