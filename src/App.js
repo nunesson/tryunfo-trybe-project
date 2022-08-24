@@ -89,9 +89,10 @@ class App extends React.Component {
     }));
   };
 
-  handleSearch = ({ target: { name, type, checked, value } }) => {
-    const result = type === 'checkbox' ? checked : value;
-    this.setState({ [name]: result });
+  handleSearch = ({ target }) => {
+    const { name } = target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    this.setState({ [name]: value });
   };
 
   render() {
@@ -111,6 +112,7 @@ class App extends React.Component {
       buscaRara,
       disableFilter,
     } = this.state;
+
     return (
       <div className="container">
         <div className="form-input">
